@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>OGNY Tech – Custom software and business systems</title>
+<meta name="description" content="OGNY Tech builds custom, desktop, web, mobile and enterprise software, plus automation, licensing and ongoing support.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;700;800&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#FFFFFF;--surface:#F2F4F8;--ink:#0A0A0A;--muted:#4A5160;--line:#D9DDE6;
+  --accent:#0B1F4D;--accent-ink:#FFFFFF;--tint:#E2E8F4;--mint:#9AA6C2;
+  --head:"Bricolage Grotesque","Trebuchet MS",system-ui,sans-serif;
+  --body:"Instrument Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);
+  color-scheme:light;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){--bg:#050608;--surface:#0E1424;--ink:#F2F4F8;--muted:#A3ACC0;--line:#232C45;--accent:#6F8BFF;--accent-ink:#050608;--tint:#14224A;--mint:#4C5A82;color-scheme:dark}
+}
+:root[data-theme="dark"]{--bg:#050608;--surface:#0E1424;--ink:#F2F4F8;--muted:#A3ACC0;--line:#232C45;--accent:#6F8BFF;--accent-ink:#050608;--tint:#14224A;--mint:#4C5A82;color-scheme:dark}
+*,*::before,*::after{box-sizing:inherit}
+html{scroll-padding-top:env(safe-area-inset-top,0px);scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 1.0625rem/1.6 var(--body)}
+img,svg{max-width:100%}
+a{color:inherit}
+:focus-visible{outline:3px solid var(--accent);outline-offset:3px;border-radius:4px}
+.wrap{max-width:1100px;margin:0 auto;padding:0 1.25rem}
+h1,h2,h3{font-family:var(--head);line-height:1.08;margin:0;letter-spacing:-.02em}
+h1{font-size:clamp(2.6rem,7vw,5rem);font-weight:800;max-width:14ch}
+h2{font-size:clamp(1.8rem,4vw,2.6rem);font-weight:700;max-width:20ch}
+h3{font-size:1.25rem;font-weight:700;letter-spacing:-.01em}
+p{margin:0}
+.lead{font-size:1.2rem;color:var(--muted);max-width:52ch}
+header{position:sticky;top:0;z-index:20;background:var(--bg);border-bottom:1px solid var(--line);padding-top:env(safe-area-inset-top,0px)}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);background:var(--bg);z-index:30}
+nav{display:flex;align-items:center;justify-content:space-between;gap:1rem;height:64px}
+.logo{font:800 1.3rem var(--head);text-decoration:none;display:flex;align-items:center;gap:.5rem}
+.logo i{width:22px;height:22px;border-radius:50%;border:5px solid var(--accent);border-right-color:var(--mint);display:inline-block}
+nav ul{display:flex;gap:1.5rem;list-style:none;margin:0;padding:0}
+nav ul a{text-decoration:none;color:var(--muted);font-weight:500}
+nav ul a:hover{color:var(--ink)}
+.btn{display:inline-block;background:var(--accent);color:var(--accent-ink);font:600 1rem var(--body);padding:.85rem 1.4rem;border-radius:10px;text-decoration:none;border:0;cursor:pointer}
+.btn:hover{filter:brightness(1.08)}
+.btn.ghost{background:transparent;color:var(--ink);border:1.5px solid var(--line)}
+@media(max-width:720px){nav ul{display:none}}
+section{padding:5rem 0}
+.hero{padding:4.5rem 0 4rem;background:#0B1F4D;color:#FFFFFF}
+.hero .lead{color:#C3CCE4}
+.hero .btn{background:#FFFFFF;color:#0B1F4D}
+.hero .btn.ghost{background:transparent;color:#FFFFFF;border:1.5px solid rgba(255,255,255,.45)}
+.hero .picker{color:var(--ink)}
+.hero-grid{display:grid;grid-template-columns:1.15fr 1fr;gap:3rem;align-items:center}
+.hero .lead{margin:1.5rem 0 2rem}
+.cta-row{display:flex;gap:.75rem;flex-wrap:wrap}
+@media(max-width:860px){.hero-grid{grid-template-columns:1fr}}
+.picker{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:1.5rem}
+.picker h3{margin-bottom:.35rem}
+.picker .sub{color:var(--muted);font-size:.95rem;margin-bottom:1rem}
+.chips{display:flex;flex-wrap:wrap;gap:.5rem;margin-bottom:1.25rem}
+.chip{font:500 .95rem var(--body);color:var(--ink);background:var(--bg);border:1.5px solid var(--line);border-radius:999px;padding:.5rem .95rem;cursor:pointer}
+.chip[aria-pressed="true"]{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+.result{background:var(--tint);border-radius:12px;padding:1.1rem 1.2rem;min-height:9.5rem}
+.result strong{font:700 1.1rem var(--head);display:block;margin-bottom:.35rem}
+.result .meta{margin-top:.75rem;font-size:.92rem;color:var(--muted)}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:1.25rem;margin-top:2.5rem}
+@media(max-width:860px){.grid3{grid-template-columns:1fr}}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:1.5rem}
+.card p{color:var(--muted);margin-top:.6rem}
+.band{background:var(--surface);border-block:1px solid var(--line)}
+.steps{list-style:none;margin:2.5rem 0 0;padding:0;display:grid;grid-template-columns:repeat(4,1fr);gap:1.25rem;counter-reset:s}
+.steps li{counter-increment:s;border-top:3px solid var(--accent);padding-top:1rem}
+.steps li::before{content:counter(s);font:800 1.6rem var(--head);color:var(--accent);display:block;margin-bottom:.25rem}
+.steps p{color:var(--muted);margin-top:.4rem;font-size:1rem}
+@media(max-width:860px){.steps{grid-template-columns:1fr 1fr}}
+@media(max-width:480px){.steps{grid-template-columns:1fr}}
+.work{display:grid;grid-template-columns:repeat(3,1fr);gap:1.25rem;margin-top:2.5rem}
+@media(max-width:860px){.work{grid-template-columns:1fr}}
+.proj{border:1px solid var(--line);border-radius:14px;overflow:hidden;background:var(--surface)}
+.proj .shot{height:140px;display:flex;align-items:flex-end;padding:1rem;font:700 1.1rem var(--head)}
+.proj:nth-child(1) .shot{background:var(--tint)}
+.proj:nth-child(2) .shot{background:#0B1F4D;color:#FFFFFF}
+.proj:nth-child(3) .shot{background:#000000;color:#FFFFFF}
+.proj div.body{padding:1.25rem 1.5rem 1.5rem}
+.proj p{color:var(--muted);margin-top:.4rem;font-size:1rem}
+.note{margin-top:1.25rem;color:var(--muted);font-size:.9rem}
+.about{display:grid;grid-template-columns:1fr 1fr;gap:3rem;align-items:start}
+@media(max-width:860px){.about{grid-template-columns:1fr}}
+.about p+p{margin-top:1rem}
+.about p{color:var(--muted)}
+form{display:grid;gap:1rem;max-width:560px;margin-top:2rem}
+label{font-weight:600;font-size:.95rem;display:grid;gap:.4rem}
+input,textarea,select{font:400 1rem var(--body);color:var(--ink);background:var(--surface);border:1.5px solid var(--line);border-radius:10px;padding:.75rem .9rem;width:100%}
+textarea{min-height:130px;resize:vertical}
+.status{color:var(--muted);font-size:.95rem;min-height:1.4em}
+footer{background:#000000;padding:2rem 0;color:#AEB6C8;font-size:.95rem}
+footer a{color:#FFFFFF}
+footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:1rem}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap">
+    <nav aria-label="Main">
+      <a class="logo" href="#top" aria-label="OGNY Tech home"><svg width="48" height="48" viewBox="0 0 56 56" role="img" aria-label="OGNY logo" fill="none" stroke-linejoin="round"><path d="M45.6 13.2A23 23 0 1 0 51 28L39 28" stroke="var(--accent)" stroke-width="5"/><path d="M17 40V16L39 40V24" stroke="var(--ink)" stroke-width="4.5" stroke-linecap="square"/><path d="M32 14.5L39 24L46 14.5" stroke="var(--accent)" stroke-width="4.5" stroke-linecap="round"/></svg>OGNY Tech</a>
+      <ul>
+        <li><a href="#services">Services</a></li>
+        <li><a href="#process">Process</a></li>
+        <li><a href="#work">Work</a></li>
+        <li><a href="#about">About</a></li>
+      </ul>
+      <a class="btn" href="#contact">Start a project</a>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+  <section class="hero">
+    <div class="wrap hero-grid">
+      <div>
+        <h1>Software built around how your business works.</h1>
+        <p class="lead">OGNY Tech designs, builds, licenses and maintains software for businesses, from a single desktop tool to enterprise systems. Clear pricing and regular demos.</p>
+        <div class="cta-row">
+          <a class="btn" href="#contact">Book a free call</a>
+          <a class="btn ghost" href="#services">See what we build</a>
+        </div>
+      </div>
+      <div class="picker" aria-live="polite">
+        <h3>What do you need built?</h3>
+        <p class="sub">Pick one for a quick idea of where we’d start.</p>
+        <div class="chips" role="group" aria-label="Project type">
+          <button class="chip" aria-pressed="true" data-k="web">Web app</button>
+          <button class="chip" aria-pressed="false" data-k="mobile">Mobile app</button>
+          <button class="chip" aria-pressed="false" data-k="desk">Desktop app</button>
+          <button class="chip" aria-pressed="false" data-k="hr">Manage employees</button>
+          <button class="chip" aria-pressed="false" data-k="auto">Automate a process</button>
+          <button class="chip" aria-pressed="false" data-k="lic">Sell or license software</button>
+        </div>
+        <div class="result" id="result"></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="services" class="band">
+    <div class="wrap">
+      <h2>What we build</h2>
+      <p class="lead" style="margin-top:1rem">Nine services that cover a product from first idea to long-term support.</p>
+      <div class="grid3">
+        <article class="card"><h3>Custom software development</h3><p>Software designed from scratch around your workflows, not forced into an off-the-shelf tool.</p></article>
+        <article class="card"><h3>Desktop application development</h3><p>Fast, reliable Windows, macOS and Linux applications, including tools that work offline.</p></article>
+        <article class="card"><h3>Web application development</h3><p>Portals, dashboards and booking systems that run in any browser with no installation.</p></article>
+        <article class="card"><h3>Mobile application development</h3><p>iOS and Android apps with push notifications, offline support and a polished feel.</p></article>
+        <article class="card"><h3>Enterprise software development</h3><p>Secure, scalable systems for larger organisations, with role-based access and audit trails.</p></article>
+        <article class="card"><h3>Employee management systems</h3><p>Staff records, attendance, leave, payroll inputs and performance in one place.</p></article>
+        <article class="card"><h3>Business automation software</h3><p>Remove repetitive manual work by connecting your tools and automating the routine steps.</p></article>
+        <article class="card"><h3>Software licensing and distribution</h3><p>License keys, activation, updates and delivery, so you can sell and distribute software with control.</p></article>
+        <article class="card"><h3>Maintenance and support</h3><p>Bug fixes, updates, monitoring and help from the team that knows your system.</p></article>
+      </div>
+    </div>
+  </section>
+
+  <section id="process">
+    <div class="wrap">
+      <h2>How a project runs</h2>
+      <ol class="steps">
+        <li><h3>Discover</h3><p>A free call and a short written brief of what you need and what it costs.</p></li>
+        <li><h3>Design</h3><p>Clickable screens you can test before any code is written.</p></li>
+        <li><h3>Build</h3><p>Two-week sprints, each ending with a demo of working software.</p></li>
+        <li><h3>Launch and support</h3><p>We deploy, train your team and stay on for fixes and new features.</p></li>
+      </ol>
+    </div>
+  </section>
+
+  <section id="work" class="band">
+    <div class="wrap">
+      <h2>Selected work</h2>
+      <div class="work">
+        <article class="proj"><div class="shot">Staff management</div><div class="body"><h3>Employee management system</h3><p>Attendance, leave and records for a growing company. Replace with your first case study.</p></div></article>
+        <article class="proj"><div class="shot">Desktop and mobile</div><div class="body"><h3>Inventory application</h3><p>Stock control that works offline and syncs when connected. Replace with your first case study.</p></div></article>
+        <article class="proj"><div class="shot">Licensing</div><div class="body"><h3>License and update portal</h3><p>Key generation, activation and downloads for a software product. Replace with your first case study.</p></div></article>
+      </div>
+      <p class="note">These are placeholders. Swap in real projects, or your own demos, as you complete them.</p>
+    </div>
+  </section>
+
+  <section id="about">
+    <div class="wrap about">
+      <h2>A small team that answers its own email.</h2>
+      <div>
+        <p>OGNY Tech is a software company founded to give businesses the same quality of engineering that large companies get, without the layers of account managers.</p>
+        <p>You work directly with the people building your product. We’ll tell you when something is a bad idea, and we’ll tell you what it costs before we start.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact" class="band">
+    <div class="wrap">
+      <h2>Tell us what you’re planning</h2>
+      <p class="lead" style="margin-top:1rem">We reply within one business day.</p>
+      <form id="cf">
+        <label>Your name<input name="name" required autocomplete="name"></label>
+        <label>Email<input name="email" type="email" required autocomplete="email"></label>
+        <label>Project type
+          <select name="type"><option>Custom software</option><option>Desktop application</option><option>Web application</option><option>Mobile application</option><option>Enterprise software</option><option>Employee management system</option><option>Business automation</option><option>Software licensing and distribution</option><option>Maintenance and support</option><option>Not sure yet</option></select>
+        </label>
+        <label>What are you trying to build?<textarea name="msg" required></textarea></label>
+        <button class="btn" type="submit">Send message</button>
+        <p class="status" id="st" role="status"></p>
+      </form>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>© <span id="yr">2026</span> OGNY Tech</span>
+    <a href="mailto:ogasu65@icloud.com">ogasu65@icloud.com</a>
+  </div>
+</footer>
+
+<script>
+var data={
+  web:{t:"Start with the one workflow users repeat most.",d:"We’d map that journey, build a secure browser-based app around it, and add features once real people use it.",m:"Typical first release: 6–10 weeks"},
+  mobile:{t:"Launch on both phones with one codebase.",d:"We’d prototype the key screens, test them with users, then build iOS and Android together.",m:"Typical first release: 8–12 weeks"},
+  desk:{t:"Build the tool your team needs on their machines.",d:"We’d choose a stack for Windows, macOS or Linux, support offline use, and set up simple installs and updates.",m:"Typical first release: 8–12 weeks"},
+  hr:{t:"Begin with records, attendance and leave.",d:"We’d replace spreadsheets with one system, then add payroll inputs, reviews and reports as you grow.",m:"Typical first release: 6–10 weeks"},
+  auto:{t:"Find the task your team does by hand every week.",d:"We’d document the rules, automate the repeatable part and keep people in charge of exceptions.",m:"Typical first release: 3–6 weeks"},
+  lic:{t:"Control how your software is sold and used.",d:"We’d build license keys, activation, update delivery and a customer download portal.",m:"Typical first release: 4–8 weeks"}
+};
+var chips=document.querySelectorAll(".chip"),res=document.getElementById("result");
+function show(k){
+  var x=data[k];
+  res.innerHTML="<strong></strong><span></span><div class='meta'></div>";
+  res.querySelector("strong").textContent=x.t;
+  res.querySelector("span").textContent=x.d;
+  res.querySelector(".meta").textContent=x.m+" (placeholder estimate)";
+}
+chips.forEach(function(c){c.addEventListener("click",function(){
+  chips.forEach(function(o){o.setAttribute("aria-pressed","false")});
+  c.setAttribute("aria-pressed","true");show(c.dataset.k);
+})});
+show("web");
+document.getElementById("yr").textContent=new Date().getFullYear();
+document.getElementById("cf").addEventListener("submit",function(e){
+  e.preventDefault();
+  var f=e.target,s="Project enquiry: "+f.type.value,
+  b="Name: "+f.name.value+"\nEmail: "+f.email.value+"\n\n"+f.msg.value;
+  window.location.href="mailto:ogasu65@icloud.com?subject="+encodeURIComponent(s)+"&body="+encodeURIComponent(b);
+  document.getElementById("st").textContent="Opening your email app to send this message.";
+});
+</script>
+</body>
+</html>
